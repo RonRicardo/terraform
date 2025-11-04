@@ -378,6 +378,8 @@ func (c *InitCommand) initPssBackend(ctx context.Context, root *configs.Module, 
 		return nil, true, diags
 	case root.StateStore != nil:
 		// state_store config present
+		// TODO: Move/modify this such that provider factories do not rely on config alone
+		// as this is problematic during migration (away from config)
 		factory, fDiags := c.Meta.GetStateStoreProviderFactory(root.StateStore, configLocks)
 		diags = diags.Append(fDiags)
 		if fDiags.HasErrors() {
